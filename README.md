@@ -29,7 +29,7 @@ def flood_fill(input_board: List[str], old:str, new:str, x:int, y:int) -> List[s
 def dfs(input_board,x,y,old_t,new_t):
     n= len(input_board)
     m= len(input_board[0])
-    
+    #check the boundary conditions!#
     if x < 0 or x>=n or y<0 or y>=m or input_board[x][y]!=old_t:
         return
 
