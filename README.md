@@ -1,35 +1,56 @@
-# floodfill
+from typing import List
 
-#I am using numbers for flood fill where all the 1 will turn into two however the last 1 on last row will still be one because there is no diagonal crossing 
+board = [
+    "......................",
+    "......##########......",
+    "......#........#......",
+    "......#........#......",
+    "......#........#####..",
+    "....###............#..",
+    "....#............###..",
+    "....##############....",
+]
 
-#define grid to navigate 
-def floodfill(grid,row,col,newColor):
-    oldColor= grid[row][col]
-    if newColor == oldColor:
-        return grid
 
-    recurse(grid,row,col,newColor,oldColor)
-    return grid
-
-# calling recursion when statement is true
-def recurse(grid,row,col,newColor,oldColor):
-    if grid[row][col]!= oldColor:
+def flood_fill(input_board: List[str], old:str, new:str, x:int, y:int) -> List[str]:
+    """Returns board with old values replaced with new values
+    through flood filling starting from the coordinates x, y
+    Args:
+        input_board (List[str])
+        old (str): Value to be replaced
+        new (str): Value that replaces the old
+        x (int): X-coordinate of the flood start point
+        y (int): Y-coordinate of the flood start point
+    Returns:
+        List[str]: Modified board
+  
+    # Implement your code here.
+"""
+def dfs(input_board,x,y,old_t,new_t):
+    n= len(input_board)
+    m= len(input_board[0])
+    
+    if x < 0 or x>=n or y<0 or y>=m or input_board[x][y]!=old_t:
         return
 
-    grid[row][col] = newColor
+    else:
 
-    if row !=0:
-        recurse(grid,row-1,col,newColor,oldColor)
+        input_board[x][y]=new_color
+        dfs (input_board,x+1,y,old_t,new_t)
+        dfs (input_board,x-1,y,old_t,new_t)
+        dfs (input_board,x,y+1,old_t,new_t)
+        dfs (input_board,x,y-1,old_t,new_t)
+    
+    
+def flood_fill(input_board,x,y,new_t):
+    old_t=input_board[x][y]
+    if old_t==new_t:
+        return
+    dfs(input_board,x,y,old_t,new_t)
 
-    if col !=0:
-        recurse(grid,row,col-1,newColor,oldColor)
 
-    if col != len(grid[0])-1:
-        recurse(grid,row,col+1,newColor,oldColor)
+modified_board = flood_fill(input_board=board, old=".", new="~", x=5, y=12)
 
-    if row != len(grid)-1:
-        recurse(grid,row+1,col,newColor,oldColor)
+for a in modified_board:
+    print(a)
 
-
-
-floodfill([[1,1,1],[1,1,0],[1,0,1]],1,1,2)
