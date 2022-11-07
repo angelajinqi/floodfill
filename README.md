@@ -11,6 +11,10 @@ board = [
     "....##############....",
 ]
 
+# 'abcd', ['a', 'b', 'c', 'd']
+board = [list(b) for b in board]
+for b in board:
+    print(b)
 
 def flood_fill(input_board: List[str], old:str, new:str, x:int, y:int) -> List[str]:
     """Returns board with old values replaced with new values
@@ -29,24 +33,26 @@ def flood_fill(input_board: List[str], old:str, new:str, x:int, y:int) -> List[s
 def dfs(input_board,x,y,old_t,new_t):
     n= len(input_board)
     m= len(input_board[0])
-    #check the boundary conditions!#
+    
     if x < 0 or x>=n or y<0 or y>=m or input_board[x][y]!=old_t:
         return
 
     else:
 
-        input_board[x][y]=new_color
+        input_board[x][y]=new_t
         dfs (input_board,x+1,y,old_t,new_t)
         dfs (input_board,x-1,y,old_t,new_t)
         dfs (input_board,x,y+1,old_t,new_t)
         dfs (input_board,x,y-1,old_t,new_t)
+        
     
     
-def flood_fill(input_board,x,y,new_t):
+def flood_fill(input_board,old, new,x,y):
     old_t=input_board[x][y]
-    if old_t==new_t:
+    if old==new:
         return
-    dfs(input_board,x,y,old_t,new_t)
+    dfs(input_board,x,y,old,new)
+    return input_board
 
 
 modified_board = flood_fill(input_board=board, old=".", new="~", x=5, y=12)
